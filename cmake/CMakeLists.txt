@@ -154,19 +154,26 @@ file(REMOVE ${CMAKE_CURRENT_BINARY_DIR}/cmaketest.map)
 find_package(Threads REQUIRED)
 
 set(_protobuf_FIND_ZLIB)
+message(STATUS "S-00000 IN protobuf A ${protobuf_WITH_ZLIB}")
 if (protobuf_WITH_ZLIB)
+  message(STATUS "S-00000 IN protobuf B")
   find_package(ZLIB)
+  message(STATUS "S-00000 IN protobuf C ${ZLIB_FOUND}")
   if (ZLIB_FOUND)
     set(HAVE_ZLIB 1)
     # FindZLIB module define ZLIB_INCLUDE_DIRS variable
     # Set ZLIB_INCLUDE_DIRECTORIES for compatible
     set(ZLIB_INCLUDE_DIRECTORIES ${ZLIB_INCLUDE_DIRECTORIES} ${ZLIB_INCLUDE_DIRS})
+    message(STATUS "S-00000 IN protobuf D ${ZLIB_INCLUDE_DIRECTORIES}")
+    message(STATUS "S-00000 IN protobuf E ${ZLIB_INCLUDE_DIRS}")
     # Using imported target if exists
     if (TARGET ZLIB::ZLIB)
+    message(STATUS "S-00000 IN protobuf F")
       set(ZLIB_LIBRARIES ZLIB::ZLIB)
       set(_protobuf_FIND_ZLIB "if(NOT ZLIB_FOUND)\n  find_package(ZLIB)\nendif()")
     endif (TARGET ZLIB::ZLIB)
   else (ZLIB_FOUND)
+    message(STATUS "S-00000 IN protobuf G")
     set(HAVE_ZLIB 0)
     # Explicitly set these to empty (override NOT_FOUND) so cmake doesn't
     # complain when we use them later.
@@ -176,6 +183,7 @@ if (protobuf_WITH_ZLIB)
 endif (protobuf_WITH_ZLIB)
 
 if (HAVE_ZLIB)
+  message(STATUS "S-00000 IN protobuf H")
   add_definitions(-DHAVE_ZLIB)
 endif (HAVE_ZLIB)
 
